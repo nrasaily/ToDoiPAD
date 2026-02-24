@@ -16,6 +16,12 @@
             "state" : "translated",
             "value" : "ToDo"
           }
+        },
+        "mr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ToDo"
+          }
         }
       }
     }
