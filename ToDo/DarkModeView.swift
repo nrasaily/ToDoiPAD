@@ -9,5 +9,6 @@ import SwiftUI
 struct DarkModeView: View {
     var body: some View {
         Toggle("Dark Mode", isOn: .constant(false))
+            .accessibilityIdentifier("Dark_Mode_Toggle")
     }
 }

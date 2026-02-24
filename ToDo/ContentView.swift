@@ -30,7 +30,9 @@ struct ContentView: View {
                     
                     NavigationLink(value: group) {
                         Label(group.title, systemImage: group.symbolName)
+                        
                     }
+                    .accessibilityIdentifier("taskGroup_\(group.title)") // here
                 }
             }
             
@@ -44,6 +46,7 @@ struct ContentView: View {
                     } label: {
                         Image(systemName: isDarkModeOn ? "sun.max.fill" : "moon.fill")
                     }
+                    .accessibilityIdentifier("Dark_Mode_Button")  // here
                 }
                 ToolbarItem {
                     Button {
@@ -51,6 +54,7 @@ struct ContentView: View {
                     } label: {
                         Image(systemName: "plus")
                     }
+                    .accessibilityIdentifier("Show_Add_Group_Button")   // here
                     
                 }
             }

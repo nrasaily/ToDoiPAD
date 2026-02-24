@@ -18,8 +18,9 @@ struct NewGroupView: View {
     var body: some View {
         NavigationStack {
             Form {
-                Section("Group Name") {
+                Section("Group_Name_Title") {
                     TextField("Type in the name of your group", text: $groupName)
+                        .accessibilityIdentifier("Group_Name")
                 }
                 Section("Select Icon") {
                     LazyVGrid(columns:[ GridItem(.adaptive(minimum: 40))]) {
@@ -36,16 +37,21 @@ struct NewGroupView: View {
                                 .onTapGesture {
                                     selectedIcon = icon
                                 }
+                                .accessibilityIdentifier("icon_\(icon)") // here
                         }
+                        
                     }
                     .padding(.vertical)
                 }
             }
             .navigationTitle("New Group")
+            
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Cancel") { dismiss() }
+                        .accessibilityIdentifier("dismiss_button") // here
                 }
+                
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Create") {
                         let newGroup = TaskGroup(title: groupName, symbolName: selectedIcon, tasks: [])
@@ -53,7 +59,10 @@ struct NewGroupView: View {
                         dismiss()
                     }
                     .disabled(groupName.isEmpty)
+                    .accessibilityIdentifier("Create_button") // here
+                    
                 }
+                
             }
         }
     }

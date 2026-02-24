@@ -26,5 +26,6 @@ extension TaskGroup {
         TaskGroup(title: "Home", symbolName: "house.fill", tasks: [
             TaskItem(title: "Buy Groceries", isCompleted:true),
             TaskItem(title: "Walk the dog")])
+        
     ]
 }
