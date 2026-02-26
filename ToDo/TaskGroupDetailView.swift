@@ -9,6 +9,7 @@ import SwiftUI
 struct TaskGroupDetailView: View {
     @Binding var group: TaskGroup
     @Environment(\.horizontalSizeClass) var sizeClass
+    //@Binding private var selectedPriority: String
     
     var body: some View {
         List {
@@ -34,6 +35,25 @@ struct TaskGroupDetailView: View {
                         .strikethrough(task.isCompleted)
                         .foregroundStyle(task.isCompleted ? .gray : .primary)
                         .accessibilityIdentifier("Task: \(task.title)")
+                }
+                HStack {
+                    DatePicker("Goal Date", selection: $task.dueDate,
+                               displayedComponents: .date)
+                        .labelsHidden()
+                        .scaleEffect(0.8)
+                        .accessibilityIdentifier("TaskDatePicker")
+                    
+                    Text("Due: \(task.dueDate.formatted( date: .abbreviated, time: .omitted))")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                        .accessibilityIdentifier("TaskDateLabel")
+                    
+                    Picker("Priority", selection: $task.priority) {
+                        Text("Low").tag(Priority.low)
+                        Text("Medium").tag(Priority.medium)
+                        Text("High").tag(Priority.high)
+                    }
+                    .accessibilityIdentifier("priority_picker")
                 }
             }
             .onDelete { index in

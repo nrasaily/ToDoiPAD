@@ -126,4 +126,27 @@ final class ToDoUITests: XCTestCase {
         XCTAssertEqual(result, .completed, "The task should be removed from the list")
     }
     
+    func testTaskHasDateVisible() {
+        let app = XCUIApplication()
+        app.launch()
+        //app.buttons["profileCard_professor"].tap()
+        app.buttons["taskGroup_School"].tap()
+        
+        let dateDisplay = app.staticTexts["TaskDateLabel"]
+        XCTAssertTrue(dateDisplay.exists, "The date label should be visible.")
+        
+        
+        
+    }
+    
+    func testProirityTaskFilter() {
+        let app = XCUIApplication()
+        app.launch()
+        app.buttons["taskGroup_School"].tap()
+        let priorityFilter = app.buttons["priority_picker"]
+        
+        XCTAssertTrue(priorityFilter.exists, "The rawvalue for priority list  need to be visible")
+        
+    }
+    
 }
