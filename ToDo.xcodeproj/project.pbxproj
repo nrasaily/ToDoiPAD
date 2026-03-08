@@ -194,6 +194,7 @@
 				Base,
 				hi,
 				mr,
+				"es-419",
 			);
 			mainGroup = 6A85DB612F2568110076BC6D;
 			minimizedProjectReferenceProxies = 1;

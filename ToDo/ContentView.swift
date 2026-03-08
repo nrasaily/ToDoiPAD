@@ -11,10 +11,11 @@ struct ContentView: View {
     @State private var taskGroups: [TaskGroup] = []
     @State private var selectedGroup: TaskGroup?
     @State private var columnVisibility: NavigationSplitViewVisibility = .all
-    
+
     @State private var isShowingAddGroup = false
     @Environment(\.scenePhase) private var scenePhase
     let saveKey = "SavedTaskGroups"
+    @Binding var profile: Profile
     // MARK: - Adding the functionallity of dark mode
     @Environment(\.colorScheme) var colorScheme
     
@@ -25,7 +26,7 @@ struct ContentView: View {
         NavigationSplitView(columnVisibility: $columnVisibility) {
             
             List(selection: $selectedGroup) {
-                ForEach(taskGroups) { group in
+                ForEach(profile.groups) { group in
                     
                     
                     NavigationLink(value: group) {
@@ -61,8 +62,8 @@ struct ContentView: View {
             
         } detail: {
             if let group = selectedGroup {
-                if let index = taskGroups.firstIndex(where: { $0.id == group.id }) {
-                    TaskGroupDetailView(group: $taskGroups[index])
+                if let index = profile.groups.firstIndex(where: { $0.id == group.id }) {
+                    TaskGroupDetailView(group: $profile.groups[index])
                 }
             } else {
                 ContentUnavailableView("Select a group to see more details.", systemImage: "sidebar.left")
@@ -81,13 +82,13 @@ struct ContentView: View {
         .preferredColorScheme(isDarkModeOn ? .dark : .light)
         .sheet(isPresented: $isShowingAddGroup) {
             NewGroupView { newGroup in
-                taskGroups.append(newGroup)
-                selectedGroup = newGroup
+                profile.groups.append(newGroup)
+                
             }
         }
     }
     func saveData() {
-        if let encodedData = try? JSONEncoder().encode(taskGroups) {
+        if let encodedData = try? JSONEncoder().encode(profile.groups) {
             UserDefaults.standard.set(encodedData, forKey: saveKey)
         }
         //        let encoder = JSONEncoder()
@@ -97,14 +98,12 @@ struct ContentView: View {
     }
     func loadData() {
         if let savedData = UserDefaults.standard.data(forKey: saveKey) {
-            //            let decoder = JSONDecoder()
-            //            if let loadedTaskGroups = try? decoder.decode([TaskGroup].self, from: savedData) {
-            //                taskGroups = loadedTaskGroups
-            if let decodeGroups = try? JSONDecoder().decode([TaskGroup].self, from: savedData) {
-                taskGroups = decodeGroups
-                return print("Data loaded successfully")
+          if let decodedgroups = try? JSONDecoder ().decode([TaskGroup].self, from: savedData) {
+                profile.groups = decodedgroups
+              return
             }
         }
+    
         taskGroups = TaskGroup.sampleData
     }
 }
